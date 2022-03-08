@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useState } from "react";
+import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
+import Home from "./components/home";
+import NavBar from "./components/navbar";
 
 function App() {
+  const [loading, setLoading] = useState(true);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div className="font-DMsans bg-slate-400">
+        <header className="p-10 text-3xl md:text-6xl font-bold text-right bg-slate-300">
+          <h1>Carls NC News</h1>
+        </header>
+        <nav>
+          <NavBar loading={loading} setLoading={setLoading} />
+        </nav>
+        <section>
+          <Home loading={loading} setLoading={setLoading} />
+        </section>
+      </div>
+    </BrowserRouter>
   );
 }
 
