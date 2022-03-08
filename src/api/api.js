@@ -15,17 +15,3 @@ export function getTopics() {
     return response;
   });
 }
-
-// export function getItemsByCategory(filter) {
-//   return marketApi
-//     .get(`/items?category_name=${filter}`)
-//     .then(({ data: { items } }) => {
-//       return items;
-//     });
-// }
-
-// export function postItem() {
-//   return marketApi.post("/items").then(({ item }) => {
-//     return item;
-//   });
-// }
