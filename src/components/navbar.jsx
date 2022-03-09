@@ -1,37 +1,34 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import * as api from "../api/api";
-import Home from "./home";
-import User from "./user";
 
-function NavBar(loading, setLoading) {
-    const [topic, setTopic] = useState("");
+function NavBar() {
+  const [topic, setTopic] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-      api.getTopics().then(({data: {topics}}) => {
-        // setLoading(false);
-        topics.map((topic)=> {
-  
-        });
-      });
-    }, []);
+  useEffect(() => {
+    setLoading(true)
+    api.getTopics().then(({data: {topics}}) => {
+      setTopic(topics);
+      setLoading(false);
+    });
+  },[]);
 
-  return (
-    <div className="">
-
-{/* use optomistic rendering for the menu topics */}
-        
-          <Link to="/user">User</Link>
-          <section>
-          <Routes>
-            <Route
-              path="/user"
-              element={<User />}
-            />
-          </Routes>
-        </section>
-    </div>
-  );
+  if (loading) return <p>Loading...</p>
+  else {
+    return (
+        <div className="grid grid-cols-4 p-3 m-5 uppercase bg-slate-300 md:m-16 lg:mx-36">
+          <Link key="home" className="p-4 hover:font-bold hover:shadow-md hover:bg-slate-200 md:text-lg lg:text-xl" to="/">home
+            </Link>
+          {topic.map((item) => {
+            return <>
+            <Link key={`${item.slug}`} className="p-4 hover:font-bold hover:bg-slate-200 hover:shadow-md md:text-lg lg:text-xl" to={`/${item.slug}`}>{item.slug}
+            </Link> 
+            </>
+          })}
+        </div>
+          );
+        }
 }
 
 export default NavBar;

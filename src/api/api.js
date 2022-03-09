@@ -4,14 +4,10 @@ const newsApi = axios.create({
   baseURL: "https://carls-nc-news.herokuapp.com/api",
 });
 
-export function getArticles() {
-  return newsApi.get("/articles").then(({ data: { articles } }) => {
-    return articles;
-  });
-}
+export const getArticles = async (filter = "") => {
+  return await newsApi.get(`/articles?topic=${filter}`);
+};
 
-export function getTopics() {
-  return newsApi.get("/topics").then((response) => {
-    return response;
-  });
-}
+export const getTopics = async () => {
+  return await newsApi.get("/topics");
+};
