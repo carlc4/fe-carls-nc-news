@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import NavBar from "./components/navbar";
 import Home from "./components/home";
 import FilteredTopic from "./components/filteredtopic";
+import ArticlePage from "./components/articlepage";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/:topic" element={<FilteredTopic />} />
+            <Route path="/articles/:article_id" element={<ArticlePage />} />
           </Routes>
         </section>
       </div>

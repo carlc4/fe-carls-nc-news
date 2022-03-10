@@ -11,3 +11,7 @@ export const getArticles = async (filter = "") => {
 export const getTopics = async () => {
   return await newsApi.get("/topics");
 };
+
+export const getArticleById = async (id = "") => {
+  return await newsApi.get(`/articles/${id}`);
+};
