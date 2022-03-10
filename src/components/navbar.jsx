@@ -21,10 +21,10 @@ function NavBar() {
           <Link key="home" className="p-4 hover:font-bold hover:shadow-md hover:bg-slate-200 md:text-lg lg:text-xl" to="/">home
             </Link>
           {topic.map((item) => {
-            return <>
-            <Link key={`${item.slug}`} className="p-4 hover:font-bold hover:bg-slate-200 hover:shadow-md md:text-lg lg:text-xl" to={`/${item.slug}`}>{item.slug}
+            return <section key={item.slug} className="p-4">
+            <Link className="p-4 hover:font-bold hover:bg-slate-200 hover:shadow-md md:text-lg lg:text-xl" to={`/${item.slug}`}>{item.slug}
             </Link> 
-            </>
+            </section>
           })}
         </div>
           );

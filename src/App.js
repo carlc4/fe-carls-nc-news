@@ -1,6 +1,7 @@
 import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import NavBar from "./components/navbar";
+import Home from "./components/home";
 import FilteredTopic from "./components/filteredtopic";
 
 function App() {
@@ -15,7 +16,7 @@ function App() {
         </nav>
         <section>
           <Routes>
-            <Route path="/" element={<FilteredTopic />} />
+            <Route path="/" element={<Home />} />
             <Route path="/:topic" element={<FilteredTopic />} />
           </Routes>
         </section>
