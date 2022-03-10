@@ -1,22 +1,24 @@
 import "./App.css";
-import { useState } from "react";
-import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
-import Home from "./components/home";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import NavBar from "./components/navbar";
+import Home from "./components/home";
+import FilteredTopic from "./components/filteredtopic";
 
 function App() {
-  const [loading, setLoading] = useState(true);
   return (
     <BrowserRouter>
       <div className="font-DMsans bg-slate-400">
-        <header className="p-10 text-3xl md:text-6xl font-bold text-right bg-slate-300">
+        <header className="p-10 text-3xl md:text-6xl font-bold text-right bg-slate-200">
           <h1>Carls NC News</h1>
         </header>
         <nav>
-          <NavBar loading={loading} setLoading={setLoading} />
+          <NavBar />
         </nav>
         <section>
-          <Home loading={loading} setLoading={setLoading} />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/:topic" element={<FilteredTopic />} />
+          </Routes>
         </section>
       </div>
     </BrowserRouter>
