@@ -4,7 +4,7 @@ function ArticleCard({article}) {
   
   return (
     <>
-    <div className="m-5 bg-white p-4 rounded-lg shadow-md md:m-16 lg:mx-36">
+    <article className="m-5 bg-white p-4 rounded-lg shadow-md md:m-16 lg:mx-36">
       <h3 className="pb-2 font-bold uppercase text-lg sm:text-xl">{article.title}</h3>
       <h4 className="pb-2 text-sm text-slate-500 hover:text-slate-800 sm:text-md cursor-pointer">by {article.author}</h4>
       <h4 className="box-border rounded-md p-3 font-bold uppercase text-center border-2 border-red-300 sm:text-xl">{article.topic}</h4>
@@ -14,10 +14,10 @@ function ArticleCard({article}) {
         <form className="text-center" action="">
           <button type="submit" className="p-3 text-slate-500 hover:text-slate-800">Comments</button>
           <button type="submit" className="p-3 text-slate-500 hover:text-slate-800">Comment</button>
-          <button type="submit" className="p-3 text-slate-500 hover:text-slate-800">Vote</button>
+          <button type="submit" className="p-3 text-slate-500 hover:text-slate-800">Votes {article.votes}</button>
         </form>
       </h5>
-    </div>
+    </article>
     </>
   );
 }
