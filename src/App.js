@@ -4,8 +4,10 @@ import NavBar from "./components/navbar";
 import Home from "./components/home";
 import FilteredTopic from "./components/filteredtopic";
 import ArticlePage from "./components/articlepage";
+import { useState } from "react";
 
 function App() {
+  const [sortedArticles, setSortedArticles] = useState("created_at");
   return (
     <BrowserRouter>
       <div className="font-DMsans bg-slate-400">
@@ -18,7 +20,15 @@ function App() {
         <section>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/:topic" element={<FilteredTopic />} />
+            <Route
+              path="/:topic"
+              element={
+                <FilteredTopic
+                  sortedArticles={sortedArticles}
+                  setSortedArticles={setSortedArticles}
+                />
+              }
+            />
             <Route path="/articles/:article_id" element={<ArticlePage />} />
           </Routes>
         </section>
