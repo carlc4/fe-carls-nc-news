@@ -4,7 +4,6 @@ import NavBar from "./components/navbar";
 import Home from "./components/home";
 import FilteredTopic from "./components/filteredtopic";
 import ArticlePage from "./components/articlepage";
-import DropDownMenu from "./components/dropdownmenu";
 import { useState } from "react";
 
 function App() {

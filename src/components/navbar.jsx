@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import * as api from "../api/api";
-import DropDownMenu from "./dropdownmenu";
 
 function NavBar() {
   const [topic, setTopic] = useState([]);
