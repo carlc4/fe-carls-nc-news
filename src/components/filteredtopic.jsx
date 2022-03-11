@@ -23,7 +23,7 @@ function FilteredTopic() {
   else {
   return (
     <>
-    <DropDownMenu setSortedArticles={setSortedArticles} setOrderBy={setOrderBy}
+    <DropDownMenu sortedArticles={sortedArticles} setSortedArticles={setSortedArticles} setOrderBy={setOrderBy}
                   orderBy={orderBy}/>
     <div className="">
       {allArticles.map((article)=> {
