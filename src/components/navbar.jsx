@@ -26,6 +26,7 @@ function NavBar() {
             </Link> 
             </section>
           })}
+          <Link to="/user">User</Link>
         </div>
           );
         }

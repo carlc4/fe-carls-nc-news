@@ -4,12 +4,20 @@ const newsApi = axios.create({
   baseURL: "https://carls-nc-news.herokuapp.com/api",
 });
 
+export const getUsers = async () => {
+  return await newsApi.get("/users");
+};
+
 export const getTopics = async () => {
   return await newsApi.get("/topics");
 };
 
 export const getArticleById = async (id = "") => {
   return await newsApi.get(`/articles/${id}`);
+};
+
+export const getCommentsByArticleId = async (id = "") => {
+  return await newsApi.get(`articles/${id}/comments`);
 };
 
 export const getArticles = async (topic, sort_by, order) => {
