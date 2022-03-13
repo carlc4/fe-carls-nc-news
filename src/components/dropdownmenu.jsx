@@ -1,5 +1,3 @@
-import { useState } from "react"
-
 function DropDownMenu({sortedArticles, setSortedArticles, orderBy,setOrderBy})  {
 
   const handleSearch = (e) => {
@@ -13,7 +11,6 @@ function DropDownMenu({sortedArticles, setSortedArticles, orderBy,setOrderBy})  
   return (
     <>
     <div className="uppercase m-12 text-xl md:m-18"> 
-    {console.log(sortedArticles)}
       <label className="p-5">Sort By:</label>
       <select name="sort" id="sort_by" value={sortedArticles} onChange={handleSearch}>
       <option value="created_at">Date</option>
