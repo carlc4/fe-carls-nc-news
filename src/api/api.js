@@ -29,3 +29,10 @@ export const getArticles = async (topic, sort_by, order) => {
     },
   });
 };
+
+// export const postComment = async(id, username, (body) => {
+//   return await newsApi.post(`/articles/${id}/comments`, {
+//     firstName: "Fred",
+//     lastName: "Flintstone",
+//   });
+// });

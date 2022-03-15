@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import * as api from "../api/api";
 import CommentCard from "./commentcard";
@@ -36,7 +36,7 @@ function ArticlePage() {
       <h4 className="p-1 font-bold uppercase text-center border-2 border-red-300 sm:text-xl">{singleArticle.topic}</h4>
       <h5>
         <form action="">
-          <button type="submit" className="p-3 text-slate-500 hover:text-slate-800">Comment</button>
+        <Link className="p-3 text-slate-500 hover:text-slate-80 hover:text-slate-800" to={`/articles/${singleArticle.article_id}/comments`}>Comment on this</Link>
           <button type="submit" className="p-3 text-slate-500 hover:text-slate-800">Vote</button>
         </form>
       </h5>

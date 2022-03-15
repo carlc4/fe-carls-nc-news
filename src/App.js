@@ -4,6 +4,7 @@ import NavBar from "./components/navbar";
 import Home from "./components/home";
 import FilteredTopic from "./components/filteredtopic";
 import ArticlePage from "./components/articlepage";
+import PostComment from "./components/postcomment";
 import User from "./components/user";
 import { useState } from "react";
 import { UserContext } from "./contexts/usercontext";
@@ -49,6 +50,10 @@ function App() {
                 }
               />
               <Route path="/articles/:article_id" element={<ArticlePage />} />
+              <Route
+                path="/articles/:article_id/comments"
+                element={<PostComment />}
+              />
               <Route path="/user" element={<User />} />
             </Routes>
           </section>
