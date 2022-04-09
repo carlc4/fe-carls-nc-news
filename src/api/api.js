@@ -30,9 +30,25 @@ export const getArticles = async (topic, sort_by, order) => {
   });
 };
 
-// export const postComment = async(id, username, (body) => {
-//   return await newsApi.post(`/articles/${id}/comments`, {
-//     firstName: "Fred",
-//     lastName: "Flintstone",
-//   });
-// });
+export const postComment = async (id, username, body) => {
+  return await newsApi.post(`/articles/${id}/comments`, {
+    username: username,
+    comment: body,
+  });
+};
+
+export const findUser = async (username) => {
+  return await newsApi.get(`/users/${username}`);
+};
+
+export const updateArticleVotes = async (id, votes) => {
+  return await newsApi.patch(`/articles/${id}`, {
+      inc_votes: votes
+  })
+}
+
+export const updateCommentVotes = async (id, votes) => {
+  return await newsApi.patch(`/comments/${id}`, {
+      inc_votes: votes
+  })
+}
