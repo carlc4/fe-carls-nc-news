@@ -4,31 +4,23 @@ import NavBar from "./components/navbar";
 import Home from "./components/home";
 import FilteredTopic from "./components/filteredtopic";
 import ArticlePage from "./components/articlepage";
+import PostComment from "./components/postcomment";
 import User from "./components/user";
 import { useState } from "react";
 import { UserContext } from "./contexts/usercontext";
 
 function App() {
   const [sortedArticles, setSortedArticles] = useState("created_at");
-  const [user, setUser] = useState({ user: "guest", auth: false });
-
-  const login = (name) => {
-    setUser((user) => ({
-      name: name,
-      auth: true,
-    }));
-  };
-
-  const logout = () => {
-    setUser((user) => ({
-      name: "",
-      auth: false,
-    }));
-  };
+  const [loggedInUser, setLoggedInUser] = useState({
+    username: "Login",
+    email: "",
+    avatarUrl:
+      "",
+  });
 
   return (
     <BrowserRouter>
-      <UserContext.Provider value={{ user, login, logout }}>
+      <UserContext.Provider value={{ loggedInUser, setLoggedInUser }}>
         <div className="font-DMsans bg-slate-400">
           <header className="p-10 text-3xl md:text-6xl font-bold text-right bg-slate-200">
             <h1>Carls NC News</h1>
@@ -49,6 +41,10 @@ function App() {
                 }
               />
               <Route path="/articles/:article_id" element={<ArticlePage />} />
+              <Route
+                path="/articles/:article_id/comments"
+                element={<PostComment />}
+              />
               <Route path="/user" element={<User />} />
             </Routes>
           </section>
