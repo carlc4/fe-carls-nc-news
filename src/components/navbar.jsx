@@ -34,7 +34,7 @@ function NavBar() {
         </Link>
         {topic.map((item) => {
           return <section key={item.slug} className="p-4">
-            <Link className="p-4 hover:font-bold hover:bg-slate-200 hover:shadow-md md:text-lg lg:text-xl" to={`/${item.slug}`}>{item.slug}
+            <Link className="p-4 hover:font-bold hover:bg-slate-200 hover:shadow-md md:text-lg lg:text-xl" to={`topics/${item.slug}`}>{item.slug}
             </Link>
           </section>
         })}

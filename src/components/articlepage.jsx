@@ -86,35 +86,35 @@ function ArticlePage() {
     }
   }
 
-  if (loading) return <p>Loading..</p>;
+  return (loading ? <p>Loading...</p> : singleArticle.article_id ? (
+    <>
+      <article className="m-5 bg-white p-4 rounded-lg shadow-md md:m-16 lg:mx-36">
+        <h3 className="font-bold uppercase text-lg sm:text-xl">{singleArticle.title}</h3>
+        <h4 className="pl-3  pb-5 text-sm text-slate-500 hover:text-slate-800 sm:text-md cursor-pointer">by {singleArticle.author}</h4>
+        <p className="p-2 pb-10 sm:text-xl">{singleArticle.body}</p>
+        <h4 className="p-1 font-bold uppercase text-center border-2 border-red-300 sm:text-xl">{singleArticle.topic}</h4>
+        <h5>
+          <form action="">
+            <Link className="p-3 text-slate-500 hover:text-slate-80 hover:text-slate-800" to={`/articles/${singleArticle.article_id}/comments`}>Comment on this</Link>
+            <p></p><button onClick={(e) => { handleUpVote(e) }}>+</button><p className="p-3 text-slate-500">{votes} Votes</p><button onClick={(e) => { handleDownVote(e) }}>-</button>
+            {enableDelete ? <Link to={`/articles/${article_id}/delete`}>DELETE</Link> : null}
+          </form>
+        </h5>
+      </article>
 
-  else {
-    return (
-      <>
-        <article className="m-5 bg-white p-4 rounded-lg shadow-md md:m-16 lg:mx-36">
-          <h3 className="font-bold uppercase text-lg sm:text-xl">{singleArticle.title}</h3>
-          <h4 className="pl-3  pb-5 text-sm text-slate-500 hover:text-slate-800 sm:text-md cursor-pointer">by {singleArticle.author}</h4>
-          <p className="p-2 pb-10 sm:text-xl">{singleArticle.body}</p>
-          <h4 className="p-1 font-bold uppercase text-center border-2 border-red-300 sm:text-xl">{singleArticle.topic}</h4>
-          <h5>
-            <form action="">
-              <Link className="p-3 text-slate-500 hover:text-slate-80 hover:text-slate-800" to={`/articles/${singleArticle.article_id}/comments`}>Comment on this</Link>
-              <p></p><button onClick={(e) => { handleUpVote(e) }}>+</button><p className="p-3 text-slate-500">{votes} Votes</p><button onClick={(e) => { handleDownVote(e) }}>-</button>
-              {enableDelete ? <Link to={`/articles/${article_id}/delete`}>DELETE</Link> : null}
-            </form>
-          </h5>
-        </article>
-
-        <section>
-          {comments.map((comment) => {
-            return <section key={comment.comment_id}>
-              <CommentCard comment={comment} article_id={article_id} />
-            </section>
-          })}
-        </section>
-      </>
-    );
-  }
+      <section>
+        {comments.map((comment) => {
+          return <section key={comment.comment_id}>
+            <CommentCard comment={comment} article_id={article_id} />
+          </section>
+        })}
+      </section>
+    </>
+  ) : <main>
+    <h1>Article does not exist</h1>
+    <Link to="/">Back Home</Link>
+  </main>
+  );
 }
 
 export default ArticlePage

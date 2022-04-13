@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import * as api from "../api/api";
 import ArticleCard from "./articleCard"
@@ -13,28 +13,33 @@ function FilteredTopic() {
 
   useEffect(() => {
     setLoading(true)
-    api.getArticles(topic, sortedArticles, orderBy).then(({data: {articles}}) => {
+    api.getArticles(topic, sortedArticles, orderBy).then(({ data: { articles } }) => {
       setAllArticles(articles);
       setLoading(false);
-    });
+    })
+      .catch((err) => {
+        setLoading(false)
+        setAllArticles([])
+      });
   }, [topic, sortedArticles, orderBy]);
 
-  if (loading) return <p>Loading...</p>;
-  else {
-  return (
+  return (loading ? <p>Loading...</p> : allArticles.length > 0 ? (
     <>
-    <DropDownMenu sortedArticles={sortedArticles} setSortedArticles={setSortedArticles} setOrderBy={setOrderBy}
-                  orderBy={orderBy}/>
-    <div className="">
-      {allArticles.map((article)=> {
-        return <section key={article.article_id}>
-        <ArticleCard article={article}/>
-        </section>
-      })}
-    </div>
+      <DropDownMenu sortedArticles={sortedArticles} setSortedArticles={setSortedArticles} setOrderBy={setOrderBy}
+        orderBy={orderBy} />
+      <div className="">
+        {allArticles.map((article) => {
+          return <section key={article.article_id}>
+            <ArticleCard article={article} />
+          </section>
+        })}
+      </div>
     </>
+  ) : <main>
+    <h1>Topic does not exist</h1>
+    <Link to="/">Back Home</Link>
+  </main>
   );
-}
 }
 
 export default FilteredTopic;

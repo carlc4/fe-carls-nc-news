@@ -6,7 +6,6 @@ import { UserContext } from "../contexts/usercontext";
 function PostArticle() {
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
-    // const [title, setTitle] = useState("");
     const [newArticle, setNewArticle] = useState();
     const [loading, setLoading] = useState(true);
     const { loggedInUser } = useContext(UserContext)
@@ -45,6 +44,11 @@ function PostArticle() {
                                 value={title}
                                 onChange={(event) => setTitle(event.target.value)}
                             />
+                            {/* <label>Topic</label>
+                            <select name="sort" id="sort_by" value={sortedArticles} onChange={handleSearch}>
+                                <option value="created_at">Date</option>
+                                <option value="comment_count">Comments</option>
+                                <option value="votes">Votes</option> */}
                             <h3>Body</h3>
                             <input
                                 value={body}
