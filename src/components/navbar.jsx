@@ -6,6 +6,7 @@ import * as api from "../api/api";
 function NavBar() {
   const [topic, setTopic] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [defaultUser, setDefaultUser] = useState(true);
   const { loggedInUser } = useContext(UserContext)
 
   useEffect(() => {
@@ -15,6 +16,15 @@ function NavBar() {
       setLoading(false);
     });
   }, []);
+
+  useEffect(() => {
+    if (loggedInUser.username !== "Login") {
+      setDefaultUser(false)
+    }
+    else {
+      setDefaultUser(true)
+    }
+  }, [loggedInUser.username]);
 
   if (loading) return <p>Loading...</p>
   else {
@@ -29,8 +39,9 @@ function NavBar() {
           </section>
         })}
         <Link to="/user">{loggedInUser.username}</Link>
+        {defaultUser ? (<Link to="/users/new">Register Account</Link>) : (<Link to="/articles/new">Post Article</Link>)}
       </div>
-    );
+    )
   }
 }
 

@@ -12,12 +12,20 @@ export const getTopics = async () => {
   return await newsApi.get("/topics");
 };
 
+export const getAllComments = async (limit = 10, p = 1) => {
+  return await newsApi.get(`/comments?limit=${limit}&&p=${p}`);
+};
+
+export const getAllArticles = async (limit = 10, p = 1) => {
+  return await newsApi.get(`/articles?limit=${limit}&&p=${p}`);
+};
+
 export const getArticleById = async (id = "") => {
   return await newsApi.get(`/articles/${id}`);
 };
 
-export const getCommentsByArticleId = async (id = "") => {
-  return await newsApi.get(`articles/${id}/comments`);
+export const getCommentsByArticleId = async (id = "", limit = 10, p = 1) => {
+  return await newsApi.get(`articles/${id}/comments?limit=${limit}&&p=${p}`);
 };
 
 export const getArticles = async (topic, sort_by, order) => {
@@ -52,3 +60,20 @@ export const updateCommentVotes = async (id, votes) => {
       inc_votes: votes
   })
 }
+
+export const deleteComment = async (id) => {
+  return await newsApi.delete(`/comments/${id}`)
+}
+
+export const deleteArticle = async (id) => {
+  return await newsApi.delete(`/articles/${id}`)
+}
+
+export const postArticle = async (author, title, body, topic) => {
+  return await newsApi.post(`/articles/`, {
+    author: author,
+    title: title,
+    body: body,
+    topic: topic
+  });
+};
