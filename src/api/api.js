@@ -77,3 +77,11 @@ export const postArticle = async (author, title, body, topic) => {
     topic: topic
   });
 };
+
+export const postNewUser = async (username, name, avatarUrl) => {
+  return await newsApi.post(`/users/new`, {
+    username: username,
+    name: name,
+    avatar_url: avatarUrl,
+  });
+};
