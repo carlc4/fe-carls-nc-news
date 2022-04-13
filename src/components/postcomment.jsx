@@ -3,7 +3,6 @@ import * as api from "../api/api";
 import { useParams, Link } from "react-router-dom";
 import { UserContext } from "../contexts/usercontext";
 
-
 function PostComment() {
   const { article_id } = useParams();
   const [comment, setComment] = useState("");
@@ -14,11 +13,15 @@ function PostComment() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setLoading(true)
-    api.postComment(article_id, username, comment).then(({ data: { article } }) => {
-      setLoading(false);
-      setStatus("Posted")
-    });
+    if (comment.length === 0) {
+      alert("Comments cannot be empty")
+    } else {
+      setLoading(true)
+      api.postComment(article_id, username, comment).then(({ data: { article } }) => {
+        setLoading(false);
+        setStatus("Posted")
+      });
+    }
   }
 
   if (status === "Posted") {

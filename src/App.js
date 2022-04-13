@@ -12,9 +12,9 @@ import { UserContext } from "./contexts/usercontext";
 import DeleteArticle from "./components/deletearticle";
 import PostArticle from "./components/postarticle";
 import CreateAccount from "./components/createaccount";
+import ErrorPage from "./components/errorpage";
 
 function App() {
-  const [sortedArticles, setSortedArticles] = useState("created_at");
   const [loggedInUser, setLoggedInUser] = useState({
     username: "Login",
     email: "",
@@ -34,11 +34,8 @@ function App() {
           </nav>
           <section>
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/:topic" element={<FilteredTopic
-                    sortedArticles={sortedArticles}
-                    setSortedArticles={setSortedArticles}
-                  />} />
+              <Route path="/" element={<Home/>} />
+              <Route path="/topics/:topic" element={<FilteredTopic/>} />
               <Route path="/articles/:article_id" element={<ArticlePage />} />
               <Route path="/articles/:article_id/comments" element={<PostComment />} />
               <Route path="/comments/:comment_id" element={<DeleteComment />} />
@@ -46,6 +43,7 @@ function App() {
               <Route path="/articles/new" element={<PostArticle />} />
               <Route path="/users/new" element={<CreateAccount />} />
               <Route path="/user" element={<User />} />
+              <Route path="*" element={<ErrorPage />} />
             </Routes>
           </section>
         </div>
