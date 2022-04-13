@@ -1,0 +1,1 @@
+// { created_at: new Date(created_at), ...otherProperties }
