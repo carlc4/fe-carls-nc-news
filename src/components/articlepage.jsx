@@ -1,7 +1,8 @@
 import { useParams, Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import * as api from "../api/api";
 import CommentCard from "./commentcard";
+import { UserContext } from '../contexts/usercontext';
 
 function ArticlePage() {
   const { article_id } = useParams();
@@ -11,17 +12,10 @@ function ArticlePage() {
   const [votes, setVotes] = useState(0);
   const [voteDown, setVoteDown] = useState(false);
   const [voteUp, setVoteUp] = useState(false);
+  const [enableDelete, setEnableDelete] = useState(false);
+  const { loggedInUser } = useContext(UserContext)
 
-  const handleClick = (change) => {
-    console.log("Click!")
-    setVotes((currVotes) => currVotes + change);
-    api.updateArticleVotes(article_id, change)
-      .catch(() => {
-        console.log("Error")
-        setVotes(0);
-        alert("Error updating votes");
-      });
-  };
+  const limit = 100
 
   useEffect(() => {
     setLoading(true)
@@ -30,19 +24,37 @@ function ArticlePage() {
       setSingleArticle(article);
       setLoading(false);
     })
-  }, [article_id]);
+  }, []);
 
   useEffect(() => {
     setLoading(true)
-    api.getCommentsByArticleId(article_id).then(({ data: { comments } }) => {
+    api.getCommentsByArticleId(article_id, limit).then(({ data: { comments } }) => {
       setComments(comments)
       setLoading(false)
     })
   }, []);
 
+  useEffect(() => {
+    if (singleArticle.author === loggedInUser.username) {
+      setEnableDelete(true)
+    }
+  }, [singleArticle]);
+
+  const handleClick = (change) => {
+    setVotes((currVotes) => currVotes + change);
+    api.updateArticleVotes(article_id, change)
+      .catch(() => {
+        console.log("Error")
+        setVotes((currVotes) => currVotes - change);
+        alert("Error updating votes");
+      });
+  };
 
   function handleUpVote(e) {
     e.preventDefault();
+    if (singleArticle.author === loggedInUser.username) {
+      return "Cannot vote on own articles!"
+    }
     if (voteUp === false && voteDown === false) {
       setVoteUp(true)
       setVoteDown(false)
@@ -58,6 +70,9 @@ function ArticlePage() {
 
   function handleDownVote(e) {
     e.preventDefault();
+    if (singleArticle.author === loggedInUser.username) {
+      return "Cannot vote on own articles!"
+    }
     if (voteUp === false && voteDown === false) {
       setVoteDown(true)
       setVoteUp(false)
@@ -71,7 +86,8 @@ function ArticlePage() {
     }
   }
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p>Loading..</p>;
+
   else {
     return (
       <>
@@ -84,6 +100,7 @@ function ArticlePage() {
             <form action="">
               <Link className="p-3 text-slate-500 hover:text-slate-80 hover:text-slate-800" to={`/articles/${singleArticle.article_id}/comments`}>Comment on this</Link>
               <p></p><button onClick={(e) => { handleUpVote(e) }}>+</button><p className="p-3 text-slate-500">{votes} Votes</p><button onClick={(e) => { handleDownVote(e) }}>-</button>
+              {enableDelete ? <Link to={`/articles/${article_id}/delete`}>DELETE</Link> : null}
             </form>
           </h5>
         </article>
@@ -91,12 +108,9 @@ function ArticlePage() {
         <section>
           {comments.map((comment) => {
             return <section key={comment.comment_id}>
-              <CommentCard comment={comment} />
+              <CommentCard comment={comment} article_id={article_id} />
             </section>
           })}
-
-
-
         </section>
       </>
     );

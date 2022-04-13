@@ -1,7 +1,8 @@
 import { useState, useContext } from "react";
 import * as api from "../api/api";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { UserContext } from "../contexts/usercontext";
+
 
 function PostComment() {
   const { article_id } = useParams();
@@ -24,7 +25,7 @@ function PostComment() {
     return (
       <>
         <p>Comment posted successfully!</p>
-        {/* <Link to="/createnewuser">View Comment</Link> */}
+        <Link to={`/articles/${article_id}`}>Back to Article</Link>
       </>
     )
   } else {
@@ -49,38 +50,3 @@ function PostComment() {
 }
 
 export default PostComment
-
-
-{/* <main>
-      <form onSubmit={e => {
-        e.preventDefault()
-        api.findUser(username)
-          .then(userInfo => {
-            if (userInfo.data.user.username) {
-              setLoggingIn(true)
-              setLoggedInUser(userInfo.data.user)
-              setUsername("Logging in..")
-            } else {
-              setLoggingIn(true)
-              setUsername("Invalid Username")
-            }
-          })
-          .catch(setUsername("Username not recognised"))
-        registerUser();
-        // render link to create new user page - run function?
-      }}>
-        <label>Username:</label>
-        <input type="text" placeholder="Enter username here..."
-          value={username} onChange={
-            (e) => {
-              setUsername(e.target.value)
-            }
-          }></input>
-        <button type="submit">Submit</button>
-        <button type="submit"></button>
-        <Link to={loggingIn ? loggedInUser ? "/profile" : "/success" : "/createnewuser"}>
-
-          {loggingIn ? "Proceed" : "Register"}
-        </Link>
-      </form>
-    </main> */}

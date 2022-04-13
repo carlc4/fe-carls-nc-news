@@ -4,10 +4,14 @@ import NavBar from "./components/navbar";
 import Home from "./components/home";
 import FilteredTopic from "./components/filteredtopic";
 import ArticlePage from "./components/articlepage";
+import DeleteComment from "./components/deletecomment"
 import PostComment from "./components/postcomment";
 import User from "./components/user";
 import { useState } from "react";
 import { UserContext } from "./contexts/usercontext";
+import DeleteArticle from "./components/deletearticle";
+import PostArticle from "./components/postarticle";
+import CreateAccount from "./components/createaccount";
 
 function App() {
   const [sortedArticles, setSortedArticles] = useState("created_at");
@@ -31,20 +35,16 @@ function App() {
           <section>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route
-                path="/:topic"
-                element={
-                  <FilteredTopic
+              <Route path="/:topic" element={<FilteredTopic
                     sortedArticles={sortedArticles}
                     setSortedArticles={setSortedArticles}
-                  />
-                }
-              />
+                  />} />
               <Route path="/articles/:article_id" element={<ArticlePage />} />
-              <Route
-                path="/articles/:article_id/comments"
-                element={<PostComment />}
-              />
+              <Route path="/articles/:article_id/comments" element={<PostComment />} />
+              <Route path="/comments/:comment_id" element={<DeleteComment />} />
+              <Route path="/articles/:article_id/delete" element={<DeleteArticle />} />
+              <Route path="/articles/new" element={<PostArticle />} />
+              <Route path="/users/new" element={<CreateAccount />} />
               <Route path="/user" element={<User />} />
             </Routes>
           </section>
