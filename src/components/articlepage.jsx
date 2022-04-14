@@ -8,6 +8,7 @@ function ArticlePage() {
   const { article_id } = useParams();
   const [singleArticle, setSingleArticle] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
   const [comments, setComments] = useState([]);
   const [votes, setVotes] = useState(0);
   const [voteDown, setVoteDown] = useState(false);
@@ -44,9 +45,8 @@ function ArticlePage() {
     setVotes((currVotes) => currVotes + change);
     api.updateArticleVotes(article_id, change)
       .catch(() => {
-        console.log("Error")
         setVotes((currVotes) => currVotes - change);
-        alert("Error updating votes");
+        setError(true)
       });
   };
 
@@ -86,7 +86,7 @@ function ArticlePage() {
     }
   }
 
-  return (loading ? <p>Loading...</p> : singleArticle.article_id ? (
+  return (loading ? <p>Loading...</p> : error ? <p>An error has occured, please refresh your page</p> : singleArticle.article_id ? (
     <>
       <article className="m-5 bg-white p-4 rounded-lg shadow-md md:m-16 lg:mx-36">
         <h3 className="font-bold uppercase text-lg sm:text-xl">{singleArticle.title}</h3>
