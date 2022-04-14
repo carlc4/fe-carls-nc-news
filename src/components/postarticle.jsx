@@ -10,9 +10,8 @@ function PostArticle() {
     const [loading, setLoading] = useState(false);
     const { loggedInUser } = useContext(UserContext)
     const [status, setStatus] = useState('')
+    const [topic, setTopic] = useState("coding")
     const username = loggedInUser.username
-
-    const topic = "coding"
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -22,6 +21,10 @@ function PostArticle() {
             setLoading(false);
             setStatus("Posted")
         });
+    }
+
+    const handleTopicChange = (e) => {
+        setTopic(e.target.value)
     }
 
     return (
@@ -40,11 +43,12 @@ function PostArticle() {
                             value={title}
                             onChange={(event) => setTitle(event.target.value)}
                         />
-                        {/* <label>Topic</label>
-                            <select name="sort" id="sort_by" value={sortedArticles} onChange={handleSearch}>
-                                <option value="created_at">Date</option>
-                                <option value="comment_count">Comments</option>
-                                <option value="votes">Votes</option> */}
+                        <label>Topic</label>
+                        <select name="topic" id="topic_type" value={topic} onChange={handleTopicChange}>
+                            <option value="coding">Coding</option>
+                            <option value="football">Football</option>
+                            <option value="cooking">Cooking</option>
+                        </select>
                         <h3>Body</h3>
                         <input
                             value={body}
