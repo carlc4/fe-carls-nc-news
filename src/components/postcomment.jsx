@@ -6,7 +6,7 @@ import { UserContext } from "../contexts/usercontext";
 function PostComment() {
   const { article_id } = useParams();
   const [comment, setComment] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const { loggedInUser } = useContext(UserContext)
   const [status, setStatus] = useState('')
   const username = loggedInUser.username
@@ -24,16 +24,13 @@ function PostComment() {
     }
   }
 
-  if (status === "Posted") {
-    return (
+  return (
+    loading ? <p>Loading...</p> : status === "Posted" ? (
       <>
         <p>Comment posted successfully!</p>
         <Link to={`/articles/${article_id}`}>Back to Article</Link>
       </>
-    )
-  } else {
-
-    return (
+    ) : (
       <>
         <main>
           <h2>Post your comment..</h2>
@@ -49,7 +46,8 @@ function PostComment() {
         </main>
       </>
     )
-  }
+  )
 }
+
 
 export default PostComment

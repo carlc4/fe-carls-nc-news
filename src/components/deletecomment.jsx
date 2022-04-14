@@ -27,10 +27,8 @@ function DeleteComment() {
             })
     }
 
-    if (loading) return <p>Loading..</p>;
-
-    else {
-        return (
+    return (
+        loading ? <p>Loading...</p> :
             <>
                 <article className="m-5 bg-white p-4 rounded-lg shadow-md md:m-16 lg:mx-36">
                     <h3 className="font-bold uppercase text-lg sm:text-xl">{articleTitle.title}</h3>
@@ -42,8 +40,7 @@ function DeleteComment() {
 
                 </article>
             </>
-        )
-    }
+    )
 }
 
 export default DeleteComment

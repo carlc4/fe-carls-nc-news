@@ -8,8 +8,6 @@ import UserArticles from './userArticles';
 const User = () => {
   const { loggedInUser, setLoggedInUser } = useContext(UserContext)
   const [username, setUsername] = useState('')
-  const [deleteCount, setDeleteCount] = useState(0)
-  const [loggingIn, setLoggingIn] = useState(false)
   const [loading, setLoading] = useState(true);
   const [comments, setComments] = useState([])
   const [articles, setArticles] = useState([])
@@ -33,7 +31,7 @@ const User = () => {
       setComments(comments);
       setLoading(false);
     });
-  }, [deleteCount]);
+  }, []);
 
   useEffect(() => {
     setLoading(true)
@@ -41,24 +39,19 @@ const User = () => {
       setArticles(articles);
       setLoading(false);
     });
-  }, [deleteCount]);
+  }, []);
 
-  // setDeleteCount((currDeleteCount) => currDeleteCount + 1);
-
-
-  if (loggedInUser.username === "Login") {
-    return (
+  return (
+    loading ? <p>Loading...</p> : loggedInUser.username === "Login" ? (
       <main>
         <form onSubmit={e => {
           e.preventDefault()
           api.findUser(username)
             .then(userInfo => {
               if (userInfo.data.user.username) {
-                setLoggingIn(true)
                 setLoggedInUser(userInfo.data.user)
                 setUsername("Logging in..")
               } else {
-                setLoggingIn(true)
                 setUsername("Invalid Username")
               }
             })
@@ -74,36 +67,34 @@ const User = () => {
           <button type="submit">Submit</button>
         </form>
       </main>
-    )
-  } else {
-    return (
-      <main>
-        <h1>Welcome, {loggedInUser.username}</h1>
-        <button onClick={(e) => { handleLogout(e) }}>LOGOUT</button>
-        <h2>Here are some of your posted articles</h2>
+    ) : (
+      <article>
+        <main>
+          <h1>Welcome, {loggedInUser.username}</h1>
+          <button onClick={(e) => { handleLogout(e) }}>LOGOUT</button>
+          <h2>Here are some of your posted articles</h2>
 
-        <article>
-          {articles.filter(singleArticle => singleArticle.author === loggedInUser.username).map(myArticles => (
-            <section key={myArticles.article_id}>
-              <UserArticles myArticles={myArticles} deleteCount={deleteCount} setDeleteCount={setDeleteCount} />
-            </section>
-          ))
-          }
+          <article>
+            {articles.filter(singleArticle => singleArticle.author === loggedInUser.username).map(myArticles => (
+              <section key={myArticles.article_id}>
+                <UserArticles myArticles={myArticles} />
+              </section>
+            ))
+            }
+          </article>
 
-        </article>
-
-        <h3>Here are some of your posted comments</h3>
-        <article>
-          {comments.filter(singleComment => singleComment.author === loggedInUser.username).map(myComments => (
-            <section key={myComments.comment_id}>
-              <UserComments myComments={myComments} deleteCount={deleteCount} setDeleteCount={setDeleteCount} />
-            </section>
-          ))
-          }
-        </article>
-      </main>
-    )
-  }
+          <h3>Here are some of your posted comments</h3>
+          <article>
+            {comments.filter(singleComment => singleComment.author === loggedInUser.username).map(myComments => (
+              <section key={myComments.comment_id}>
+                <UserComments myComments={myComments} />
+              </section>
+            ))
+            }
+          </article>
+        </main>
+      </article>)
+  )
 
 }
 
