@@ -26,9 +26,8 @@ function NavBar() {
     }
   }, [loggedInUser.username]);
 
-  if (loading) return <p>Loading...</p>
-  else {
-    return (
+  return (
+    loading ? <p>Loading...</p> :
       <div className="grid grid-cols-4 text-center p-3 m-5 uppercase  bg-slate-300 md:m-16 lg:mx-36">
         <Link key="home" className="p-4 hover:font-bold hover:shadow-md hover:bg-slate-200 md:text-lg lg:text-xl" to="/">home
         </Link>
@@ -41,8 +40,7 @@ function NavBar() {
         <Link to="/user">{loggedInUser.username}</Link>
         {defaultUser ? (<Link to="/users/new">Register Account</Link>) : (<Link to="/articles/new">Post Article</Link>)}
       </div>
-    )
-  }
+  )
 }
 
 export default NavBar;

@@ -39,44 +39,41 @@ function CreateAccount() {
             });
     }
 
-    if (status === "Posted") {
-        return (
-            <>
+    return (
+
+        loading ? <p>Loading...</p> : status === "Posted" ? (
+            <main>
                 <p>New user profile created!</p>
                 <Link to={`/user`}>View my Profile</Link>
-            </>
+            </main>
+        ) : (
+            <main>
+                <h2>Tell us about yourself..</h2>
+                <form onSubmit={handleSubmit}>
+                    <label>
+                        <h3>Username</h3>
+                        <input
+                            value={username}
+                            onChange={(event) => setUsername(event.target.value)}
+                        />
+                        <h3>Name</h3>
+                        <input
+                            value={name}
+                            onChange={(event) => setName(event.target.value)}
+                        />
+                        <h3>Avatar URL</h3>
+                        <input
+                            value={avatarUrl}
+                            onChange={(event) => setAvatarUrl(event.target.value)}
+                        />
+                    </label>
+                    <br></br>
+                    <button type="submit">Post</button>
+                </form>
+            </main>
         )
-    } else {
-
-        return (
-            <>
-                <main>
-                    <h2>Tell us about yourself..</h2>
-                    <form onSubmit={handleSubmit}>
-                        <label>
-                            <h3>Username</h3>
-                            <input
-                                value={username}
-                                onChange={(event) => setUsername(event.target.value)}
-                            />
-                            <h3>Name</h3>
-                            <input
-                                value={name}
-                                onChange={(event) => setName(event.target.value)}
-                            />
-                            <h3>Avatar URL</h3>
-                            <input
-                                value={avatarUrl}
-                                onChange={(event) => setAvatarUrl(event.target.value)}
-                            />
-                        </label>
-                        <br></br>
-                        <button type="submit">Post</button>
-                    </form>
-                </main>
-            </>
-        )
-    }
+    )
 }
+
 
 export default CreateAccount

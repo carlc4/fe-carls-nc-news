@@ -23,10 +23,8 @@ function DeleteArticle() {
             })
     }
 
-    if (loading) return <p>Loading..</p>;
-
-    else {
-        return (
+    return (
+        loading ? <p>Loading...</p> :
             <>
                 <article className="m-5 bg-white p-4 rounded-lg shadow-md md:m-16 lg:mx-36">
                     <h2 className="font-bold uppercase text-lg sm:text-xl">{singleArticle.title}</h2>
@@ -38,8 +36,8 @@ function DeleteArticle() {
 
                 </article>
             </>
-        )
-    }
+    )
 }
+// }
 
 export default DeleteArticle
