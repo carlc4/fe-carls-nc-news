@@ -14,7 +14,7 @@ const User = () => {
   const [myArticleNumber, setMyArticleNumber] = useState(0)
   const [myCommentNumber, setMyCommentNumber] = useState(0)
 
-  const limit = 1000
+  const limit = 1000 // need to figure out if the api requests are indeed using the limit param, if so can implement pagination on user profile
   let articleArray = []
   let commentArray = []
 

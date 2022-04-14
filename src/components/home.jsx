@@ -9,10 +9,14 @@ function Home() {
     const [homeArticles, setHomeArticles] = useState([]);
     const [loading, setLoading] = useState(true);
     const [orderBy, setOrderBy] = useState("desc");
+    let [page, setPage] = useState(1);
+    const [enablePrevious, setEnablePrevious] = useState(false);
+
+    let limit = 10
 
     useEffect(() => {
         setLoading(true)
-        api.getAllArticles().then(({ data: { articles } }) => {
+        api.getAllArticles(limit, page).then(({ data: { articles } }) => {
             setHomeArticles(articles);
             setLoading(false);
         })
@@ -20,7 +24,27 @@ function Home() {
                 setLoading(false)
                 setHomeArticles([])
             });
-    }, [orderBy, sortedArticles]);
+    }, [orderBy, sortedArticles, page]);
+
+    useEffect(() => {
+        if (page > 1) {
+            setEnablePrevious(true)
+        }
+        if (page === 1) {
+            setEnablePrevious(false)
+        }
+    }, [page]);
+
+    function handlePrevious(e) {
+        e.preventDefault();
+        setPage((currPage) => currPage - 1)
+    }
+
+    function handleNext(e) {
+        e.preventDefault();
+        setPage((currPage) => currPage + 1)
+        setEnablePrevious(true)
+    }
 
     return (
         loading ? <p>Loading...</p> : homeArticles.length > 0 ? (
@@ -34,6 +58,10 @@ function Home() {
                         </section>
                     })}
                 </div>
+                <footer>
+                    {enablePrevious ? <button onClick={(e) => { handlePrevious(e) }}>Previous Page</button> : null}
+                    <button onClick={(e) => { handleNext(e) }}>Next Page</button>
+                </footer>
             </>
         ) : <main>
             <h1>Topic does not exist</h1>
