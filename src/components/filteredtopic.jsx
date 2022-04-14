@@ -10,6 +10,10 @@ function FilteredTopic() {
   const { topic } = useParams();
   const [allArticles, setAllArticles] = useState([]);
   const [loading, setLoading] = useState(true);
+  let [page, setPage] = useState(1);
+  const [enablePrevious, setEnablePrevious] = useState(false);
+
+  let limit = 10
 
   useEffect(() => {
     setLoading(true)
@@ -21,7 +25,27 @@ function FilteredTopic() {
         setLoading(false)
         setAllArticles([])
       });
-  }, [topic, sortedArticles, orderBy]);
+  }, [topic, sortedArticles, orderBy, page]);
+
+  useEffect(() => {
+    if (page > 1) {
+      setEnablePrevious(true)
+    }
+    if (page === 1) {
+      setEnablePrevious(false)
+    }
+  }, [page]);
+
+  function handlePrevious(e) {
+    e.preventDefault();
+    setPage((currPage) => currPage - 1)
+  }
+
+  function handleNext(e) {
+    e.preventDefault();
+    setPage((currPage) => currPage + 1)
+    setEnablePrevious(true)
+  }
 
   return (loading ? <p>Loading...</p> : allArticles.length > 0 ? (
     <>
@@ -34,6 +58,10 @@ function FilteredTopic() {
           </section>
         })}
       </div>
+      <footer>
+        {enablePrevious ? <button onClick={(e) => { handlePrevious(e) }}>Previous Page</button> : null}
+        <button onClick={(e) => { handleNext(e) }}>Next Page</button>
+      </footer>
     </>
   ) : <main>
     <h1>Topic does not exist</h1>

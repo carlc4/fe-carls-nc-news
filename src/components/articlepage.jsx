@@ -15,8 +15,10 @@ function ArticlePage() {
   const [voteUp, setVoteUp] = useState(false);
   const [enableDelete, setEnableDelete] = useState(false);
   const { loggedInUser } = useContext(UserContext)
+  let [page, setPage] = useState(1);
+  const [enablePrevious, setEnablePrevious] = useState(false);
 
-  const limit = 100
+  let limit = 10
 
   useEffect(() => {
     setLoading(true)
@@ -29,17 +31,37 @@ function ArticlePage() {
 
   useEffect(() => {
     setLoading(true)
-    api.getCommentsByArticleId(article_id, limit).then(({ data: { comments } }) => {
+    api.getCommentsByArticleId(article_id, limit, page).then(({ data: { comments } }) => {
       setComments(comments)
       setLoading(false)
     })
-  }, []);
+  }, [page]);
 
   useEffect(() => {
     if (singleArticle.author === loggedInUser.username) {
       setEnableDelete(true)
     }
   }, [singleArticle]);
+
+  useEffect(() => {
+    if (page > 1) {
+      setEnablePrevious(true)
+    }
+    if (page === 1) {
+      setEnablePrevious(false)
+    }
+  }, [page]);
+
+  function handlePrevious(e) {
+    e.preventDefault();
+    setPage((currPage) => currPage - 1)
+  }
+
+  function handleNext(e) {
+    e.preventDefault();
+    setPage((currPage) => currPage + 1)
+    setEnablePrevious(true)
+  }
 
   const handleClick = (change) => {
     setVotes((currVotes) => currVotes + change);
@@ -109,6 +131,10 @@ function ArticlePage() {
           </section>
         })}
       </section>
+      <footer>
+        {enablePrevious ? <button onClick={(e) => { handlePrevious(e) }}>Previous Page</button> : null}
+        <button onClick={(e) => { handleNext(e) }}>Next Page</button>
+      </footer>
     </>
   ) : <main>
     <h1>Article does not exist</h1>
