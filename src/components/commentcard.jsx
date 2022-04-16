@@ -2,6 +2,7 @@ import { useParams, Link } from "react-router-dom";
 import { useState, useEffect, useContext } from "react";
 import * as api from "../api/api";
 import { UserContext } from '../contexts/usercontext';
+import convertTime from "../components/utils/convertTime"
 
 function CommentCard({ comment, article_id }) {
 
@@ -67,12 +68,14 @@ function CommentCard({ comment, article_id }) {
     }
   }
 
+  const dateAndTime = convertTime(comment.created_at)
+
   return error ? <p>An error has occured, please refresh your page</p> : (
 
     <article className="my-4 mx-12 bg-slate-100 p-4 rounded-lg shadow-md md:my-6 md:mx-24 lg:mx-44 lg:my-8">
       <h5> {comment.body} </h5>
       <h4 className="pb-2 text-sm text-slate-500 hover:text-slate-800 sm:text-md cursor-pointer">by {comment.author}</h4>
-      <h4 className="pb-2 text-sm text-slate-500 sm:text-md">Posted on {comment.created_at}</h4>
+      <h4 className="pb-2 text-sm text-slate-500 sm:text-md">Posted on {dateAndTime}</h4>
       <button onClick={(e) => { handleUpVote(e) }}>+</button><p className="p-3 text-slate-500">{commentVotes} Votes</p><button onClick={(e) => { handleDownVote(e) }}>-</button>
       {enableDelete ? <Link to={`/comments/${comment.comment_id}`}>DELETE</Link> : null}
     </article>
