@@ -15,10 +15,10 @@ function ArticleCard({ article }) {
         <br></br>
         <Link className="grid box-border rounded-md p-1 font-bold text-center border-2 border-slate-500 sm:text-xl hover:text-white hover:bg-slate-500 hover:shadow-md" to={`/articles/${article.article_id}`}>View Article</Link>
         <h5>
-          {/* <form className="text-center" action="">
-          <button type="submit" className="p-3 text-slate-500 hover:text-slate-800">Comment</button>
-          <button type="submit" className="p-3 text-slate-500 hover:text-slate-800">Votes {article.votes}</button>
-        </form> */}
+          <footer className="text-center" action="">
+            <p className="p-3 text-slate-500 hover:text-slate-800">{article.comment_count} Comments</p>
+            <p className="p-3 text-slate-500 hover:text-slate-800">{article.votes} Votes</p>
+          </footer>
         </h5>
       </article>
     </>
