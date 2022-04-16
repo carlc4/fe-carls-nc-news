@@ -10,7 +10,9 @@ function Home() {
     const [loading, setLoading] = useState(true);
     const [orderBy, setOrderBy] = useState("desc");
     let [page, setPage] = useState(1);
+    let [totalPages, setTotalPages] = useState(0);
     const [enablePrevious, setEnablePrevious] = useState(false);
+    const [enableNext, setEnableNext] = useState(true);
 
     let limit = 10
 
@@ -27,17 +29,29 @@ function Home() {
     }, [orderBy, sortedArticles, page]);
 
     useEffect(() => {
+        setLoading(true)
+        api.getAllArticles(1000).then(({ data: { articles } }) => {
+            setTotalPages(Math.ceil(articles.length / 10))
+            setLoading(false)
+        })
+    }, []);
+
+    useEffect(() => {
         if (page > 1) {
             setEnablePrevious(true)
         }
         if (page === 1) {
             setEnablePrevious(false)
         }
+        if (page === totalPages) {
+            setEnableNext(false)
+        }
     }, [page]);
 
     function handlePrevious(e) {
         e.preventDefault();
         setPage((currPage) => currPage - 1)
+        setEnableNext(true)
     }
 
     function handleNext(e) {
@@ -59,8 +73,9 @@ function Home() {
                     })}
                 </div>
                 <footer>
+                    <p>Showing {page} of {totalPages} pages</p>
                     {enablePrevious ? <button onClick={(e) => { handlePrevious(e) }}>Previous Page</button> : null}
-                    <button onClick={(e) => { handleNext(e) }}>Next Page</button>
+                    {enableNext ? <button onClick={(e) => { handleNext(e) }}>Next Page</button> : null}
                 </footer>
             </>
         ) : <main>
