@@ -29,13 +29,9 @@ const User = () => {
     })
   }
 
-  function handleEdit(e) {
-    e.preventDefault()
-  }
-
   useEffect(() => {
     setLoading(true)
-    api.getAllComments().then(({ data: { comments } }) => {
+    api.getAllComments(limit).then(({ data: { comments } }) => {
       setComments(comments);
       commentCount(comments)
       setLoading(false);
@@ -49,7 +45,6 @@ const User = () => {
       articleCount(articles)
       setLoading(false);
     });
-    // return () => { isMounted = false } found on stack overflow, change isMounted to the component that is not mounted
   }, [loggedInUser]);
 
   function commentCount(comments) {
@@ -96,13 +91,10 @@ const User = () => {
           <h1>Welcome, {loggedInUser.username}</h1>
           <h2></h2>
           <img src={loggedInUser ? loggedInUser.avatar_url : ""} alt="user-avatar" />
-          {/* update user info (name & url definitely)*/}
-
 
           <h2>You have posted {myArticleNumber} Articles</h2>
           <h2>You have posted {myCommentNumber} comments</h2>
           <button onClick={(e) => { handleLogout(e) }}>LOGOUT</button>
-          <button onClick={(e) => { handleEdit(e) }}>EDIT MY PROFILE</button>
           <h2>Here are some of your posted articles</h2>
 
           <article>
@@ -126,7 +118,6 @@ const User = () => {
         </main>
       </article>)
   )
-
 }
 
 export default User;

@@ -28,14 +28,8 @@ export const getCommentsByArticleId = async (id = "", limit = 10, p = 1) => {
   return await newsApi.get(`articles/${id}/comments?limit=${limit}&&p=${p}`);
 };
 
-export const getArticles = async (topic, sort_by, order) => {
-  return await newsApi.get("/articles", {
-    params: {
-      topic: topic,
-      sort_by: sort_by,
-      order: order,
-    },
-  });
+export const getArticles = async (limit = 10, p = 1, topic, sort_by, order) => {
+  return await newsApi.get(`/articles?limit=${limit}&&p=${p}&&topic=${topic}&&sort_by=${sort_by}&&order=${order}`);
 };
 
 export const postComment = async (id, username, body) => {
