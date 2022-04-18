@@ -5,16 +5,17 @@ import * as api from "../api/api";
 
 function NavBar() {
   const [topic, setTopic] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [defaultUser, setDefaultUser] = useState(true);
   const { loggedInUser } = useContext(UserContext)
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    setLoading(true)
-    api.getTopics().then(({ data: { topics } }) => {
-      setTopic(topics);
-      setLoading(false);
-    });
+    const topics = [{ slug: "coding", description: "Code is love, code is life" }, { slug: "football", description: "FOOTIE!" }, { slug: "cooking", description: "Hey good looking, what you got cooking?" }]
+    setTopic(topics);
+    api.getTopics().catch((err) => {
+      setTopic([]);
+      setError(true)
+    })
   }, []);
 
   useEffect(() => {
@@ -27,18 +28,18 @@ function NavBar() {
   }, [loggedInUser.username]);
 
   return (
-    loading ? <p>Loading...</p> :
-      <div className="grid grid-cols-4 text-center p-3 m-5 uppercase  bg-slate-300 md:m-16 lg:mx-36">
+    error ? <p className="text-center my-4 mx-12 bg-slate-100 p-4 rounded-lg shadow-md md:my-6 md:mx-24 lg:mx-44 lg:my-8">An error has occured, please refresh your page</p> :
+      <div className="grid grid-cols-6 text-center p-3 m-5 uppercase  bg-slate-300 md:m-16 lg:mx-36">
         <Link key="home" className="p-4 hover:font-bold hover:shadow-md hover:bg-slate-200 md:text-lg lg:text-xl" to="/">home
         </Link>
         {topic.map((item) => {
           return <section key={item.slug} className="p-4">
-            <Link className="p-4 hover:font-bold hover:bg-slate-200 hover:shadow-md md:text-lg lg:text-xl" to={`topics/${item.slug}`}>{item.slug}
+            <Link className="p-4 hover:font-bold hover:shadow-md hover:bg-slate-200 md:text-lg lg:text-xl" to={`topics/${item.slug}`}>{item.slug}
             </Link>
           </section>
         })}
-        <Link to="/user">{loggedInUser.username}</Link>
-        {defaultUser ? (<Link to="/users/new">Register Account</Link>) : (<Link to="/articles/new">Post Article</Link>)}
+        <Link to="/user" className="p-4 hover:font-bold hover:shadow-md hover:bg-slate-200 md:text-lg lg:text-xl">{loggedInUser.username}</Link>
+        {defaultUser ? (<Link to="/users/new" className="p-4 hover:font-bold hover:shadow-md hover:bg-slate-200 md:text-lg lg:text-xl">Register</Link>) : (<Link to="/articles/new" className="p-4 hover:font-bold hover:shadow-md hover:bg-slate-200 md:text-lg lg:text-xl">Post Article</Link>)}
       </div>
   )
 }
