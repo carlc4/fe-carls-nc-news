@@ -29,7 +29,7 @@ function NavBar() {
 
   return (
     error ? <p className="text-center my-4 mx-12 bg-slate-100 p-4 rounded-lg shadow-md md:my-6 md:mx-24 lg:mx-44 lg:my-8">An error has occured, please refresh your page</p> :
-      <div className="grid grid-cols-6 text-center p-3 m-5 uppercase  bg-slate-300 md:m-16 lg:mx-36">
+      <div className="grid grid-cols-4 md:grid-cols-6 text-center p-3 m-5 uppercase  bg-slate-300 md:m-16 lg:mx-36">
         <Link key="home" className="p-4 hover:font-bold hover:shadow-md hover:bg-slate-200 md:text-lg lg:text-xl" to="/">home
         </Link>
         {topic.map((item) => {

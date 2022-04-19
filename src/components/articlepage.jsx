@@ -138,23 +138,29 @@ function ArticlePage() {
     </div>
   </div> : error ? <p className="text-center my-4 mx-12 bg-slate-100 p-4 rounded-lg shadow-md md:my-6 md:mx-24 lg:mx-44 lg:my-8">An error has occured, please refresh your page</p> : singleArticle.article_id ? (
     <>
-      <article className="grid grid-cols-6 m-5 bg-white p-4 rounded-lg shadow-md md:m-16 lg:mx-36">
-        <h3 className="col-span-5 pb-2 font-bold uppercase text-lg sm:text-xl">{singleArticle.title}</h3>
-        <h4 className="col-span-1 box-border rounded-md font-bold uppercase text-center border-2 border-red-300 sm:text-xl">{singleArticle.topic}</h4>
+      <article className="grid grid-cols-5 m-5 bg-white p-4 rounded-lg shadow-md md:m-16 lg:mx-36">
+
+        <div className="col-span-3"></div>
+        <h4 className="col-span-2 box-border rounded-md font-bold uppercase text-center border-2 border-red-300 sm:text-xl">{singleArticle.topic}</h4>
+
+        <h3 className="col-span-3 pb-2 font-bold uppercase text-lg sm:text-xl">{singleArticle.title}</h3>
+        <div className="col-span-2"></div>
 
         <h4 className="col-span-2 pb-2 text-sm text-slate-500 hover:text-slate-800 sm:text-md">by {singleArticle.author}</h4>
+        <div className="col-span-3"></div>
+
         <h4 className="col-span-3 pb-2 text-sm text-slate-500 sm:text-md">Posted on {dateAndTime}</h4>
+        <div className="col-span-2"></div>
+
+        <p className="col-span-5 p-2 pb-10 sm:text-xl">{singleArticle.body}</p>
+
+        <Link className="col-span-5 box-border rounded-md p-1 font-bold text-center border-2 border-slate-500 sm:text-xl hover:text-white hover:bg-slate-500 hover:shadow-md" to={`/articles/${singleArticle.article_id}/comments`}>Comment on this</Link>
+
         <div className="col-span-1"></div>
-
-        <p className="col-span-6 p-2 pb-10 sm:text-xl">{singleArticle.body}</p>
-
-        <Link className="col-span-6 box-border rounded-md p-1 font-bold text-center border-2 border-slate-500 sm:text-xl hover:text-white hover:bg-slate-500 hover:shadow-md" to={`/articles/${singleArticle.article_id}/comments`}>Comment on this</Link>
-
-        <div className="col-span-2"></div>
-        <button className="col-span-1" onClick={(e) => { handleUpVote(e) }}>{<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" /></svg>}</button>
-        <p className="col-span-1 p-3 text-slate-500">{votes} Votes</p>
-        <button className="col-span-1" onClick={(e) => { handleDownVote(e) }}>{<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5" /></svg>}</button>
-        <div className="col-span-2"></div>
+        <button className="col-span-1 mx-auto" onClick={(e) => { handleUpVote(e) }}>{<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5" /></svg>}</button>
+        <p className="col-span-1 mx-auto p-2 text-slate-500">{votes} Votes</p>
+        <button className="col-span-1 mx-auto" onClick={(e) => { handleDownVote(e) }}>{<svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5" /></svg>}</button>
+        <div className="col-span-1"></div>
 
         {enableDelete ? <Link className="mx-auto col-span-6" to={`/articles/${article_id}/delete`}><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
