@@ -57,7 +57,8 @@ function CreateAccount() {
             </main>
         ) : (
             <main className="text-center my-4 mx-12 bg-slate-300 p-4 rounded-lg shadow-md md:my-6 md:mx-24 lg:mx-44 lg:my-8">
-                <h2 className="p-5 uppercase">Tell us about yourself..</h2>
+                <h1 className="p-5">Create an account to post articles and comments</h1>
+                <h2 className="p-5">Tell us about yourself..</h2>
                 <form onSubmit={handleSubmit}>
                     <label>
                         <h3 className="p-2">Username</h3>

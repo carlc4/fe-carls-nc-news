@@ -7,6 +7,7 @@ function PostComment() {
   const { article_id } = useParams();
   const [comment, setComment] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const { loggedInUser } = useContext(UserContext)
   const [status, setStatus] = useState('')
   const username = loggedInUser.username
@@ -20,7 +21,11 @@ function PostComment() {
       api.postComment(article_id, username, comment).then(({ data: { article } }) => {
         setLoading(false);
         setStatus("Posted")
-      });
+      })
+        .catch((err) => {
+          setError(true)
+          setLoading(false)
+        });
     }
   }
 
@@ -34,31 +39,38 @@ function PostComment() {
         </svg>
 
       </div>
-    </div> : status === "Posted" ? (
+    </div> : error ?
       <main className="text-center my-4 mx-12 bg-slate-100 p-4 rounded-lg shadow-md md:my-6 md:mx-24 lg:mx-44 lg:my-8">
-        <p className="p-5">Comment posted successfully!</p>
-        <Link to={`/articles/${article_id}`} className="p-5 uppercase hover:font-bold">Back to Article</Link>
+        <h2>Your must be registered to comment</h2>
+        <Link to={"/users/new"} className="p-5 uppercase hover:font-bold">Register Here</Link>
       </main>
-    ) : (
-      <>
-        <main className="text-center my-4 mx-12 bg-slate-300 p-4 rounded-lg shadow-md md:my-6 md:mx-24 lg:mx-44 lg:my-8">
-          <h2 className="p-5 uppercase">Post your comment..</h2>
-          <form onSubmit={handleSubmit}>
-            <label>
-              <textarea
-                cols="40"
-                rows="5"
-                value={comment}
-                onChange={(event) => setComment(event.target.value)}
-              >
-              </textarea>
-            </label>
-            <br></br>
-            <button type="submit" className="box-border border-slate-500 border-2 p-5 m-5 uppercase hover:font-bold hover:text-white hover:bg-slate-500 hover:shadow-md">Post</button>
-          </form>
+      :
+      status === "Posted" ? (
+        <main className="text-center my-4 mx-12 bg-slate-100 p-4 rounded-lg shadow-md md:my-6 md:mx-24 lg:mx-44 lg:my-8">
+          <p className="p-5">Comment posted successfully!</p>
+          <Link to={`/articles/${article_id}`} className="p-5 uppercase hover:font-bold">Back to Article</Link>
         </main>
-      </>
-    )
+      ) :
+        (
+          <>
+            <main className="text-center my-4 mx-12 bg-slate-300 p-4 rounded-lg shadow-md md:my-6 md:mx-24 lg:mx-44 lg:my-8">
+              <h2 className="p-5 uppercase">Post your comment..</h2>
+              <form onSubmit={handleSubmit}>
+                <label>
+                  <textarea
+                    cols="40"
+                    rows="5"
+                    value={comment}
+                    onChange={(event) => setComment(event.target.value)}
+                  >
+                  </textarea>
+                </label>
+                <br></br>
+                <button type="submit" className="box-border border-slate-500 border-2 p-5 m-5 uppercase hover:font-bold hover:text-white hover:bg-slate-500 hover:shadow-md">Post</button>
+              </form>
+            </main>
+          </>
+        )
   )
 }
 
